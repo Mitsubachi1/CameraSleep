@@ -1,6 +1,6 @@
 import cv2
 import time
-import os
+import os, sys
 def vidcapture():
 
     # Load the video capture object and read first frame
@@ -31,9 +31,9 @@ def vidcapture():
                 no_motion_start = time.time()
             else:
                 elapsed_time = time.time() - no_motion_start
-                if elapsed_time >= 30: # Elapsed time in seconds
+                if elapsed_time >= 300: # Elapsed time in seconds
                     os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0") # Call for sleep state if timer reaches defined elapsed time
-                    quit(0) #Closes program to avoid error on wakeup
+                    sys.exit() #Closes program to avoid error on wakeup
                     
         else:
             no_motion_start = None
@@ -42,10 +42,10 @@ def vidcapture():
         prev_frame = curr_frame
     
         # Display the difference between the frames
-        cv2.imshow("Motion Detection", thresh)
+        #cv2.imshow("Motion Detection", thresh) #hidden
     
         # Break the loop if the 'q' key is pressed
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('`'):
             break
     
     # Release the video capture object
